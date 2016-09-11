@@ -39,6 +39,11 @@ var Task = function(_id,_name,_hours, _color,_finished){
 	};
 };
 
+var TaskType = function(_id,_name){
+	this.id = _id;
+	this.name = _name;
+}
+
 app.config(function($mdThemingProvider) {
 	  var customBlueMap = 		$mdThemingProvider.extendPalette('light-blue', {
 	    'contrastDefaultColor': 'light',
@@ -128,6 +133,8 @@ app.controller('calendarController', function($scope, $mdDialog) {
    $scope.fridayTasks = [];
    $scope.saturdayTasks =  [];
    $scope.sundayTasks =  [];
+   
+  
    
    // OK
     $scope.prevWeekClick = function(){
@@ -308,7 +315,64 @@ app.controller('calendarController', function($scope, $mdDialog) {
     		}
     }
     
+    //TODO send Data to webService
+    $scope.addTask = function(_taskType,_date){
+    	var nm = _taskType.name;
+    	$scope.taskPool[0] = new Task(1,_taskType.name,1,"#561246",true);
+    }
     
+    //MOCK
+    $scope.taskTypesPool = [
+    		new TaskType(1,"Angielski"),
+    		new TaskType(1,"Niemiecki"),
+    		new TaskType(1,"AK")
+    ];
+    
+    //TODO - should fetch from webservice
+    $scope.getAvailableTaskTypes = function(){
+    	return $scope.taskTypesPool;
+    }
+    
+    //OK
+    $scope.getAddTaskMinDate = function(){
+    	return new Date();
+    }
+    
+    $scope.addTaskDialog = function(ev) {
+        $mdDialog.show({
+          controller: AddTaskDialogController,
+          templateUrl: 'pages/calendar_addTaskDialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          locals: { dataToPass:
+        	  {
+	        	  availableTaskTypes: $scope.getAvailableTaskTypes(),
+	        	  minDate: $scope.getAddTaskMinDate()
+        	  }
+          },
+          clickOutsideToClose:true,
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(tab) {
+          $scope.addTask(tab[0],tab[1]);
+          $scope.reloadData();
+        }, function() {
+        	$scope.status = 'You cancelled the dialog.';
+        });
+      };
+      
+	  function AddTaskDialogController($scope, $mdDialog, dataToPass) {
+		   $scope.data = dataToPass;
+		    $scope.hide = function() {
+		      $mdDialog.hide();
+		    };
+		    $scope.cancel = function() {
+		      $mdDialog.cancel();
+		    };
+		    $scope.answer = function() {
+		      $mdDialog.hide([$scope.data.selectedTaskType,$scope.data.selectedDate]);
+		    };
+		  }
     
     $scope.taskDialog = function(ev,_taskId,_taskName, _isDone, _taskTime) {
         $mdDialog.show({
@@ -354,8 +418,119 @@ app.controller('calendarController', function($scope, $mdDialog) {
 
 });
 
-app.controller('tasksController', function($scope) {
+app.controller('tasksController', function($scope,$mdDialog) {
     $scope.message = 'Contact us! JK. This is just a demo.';
+    
+    //MOCK
+    $scope.taskTypesPool = [
+                      new TaskType(1,'Angielski'),
+                      new TaskType(1,'Niemiecki'),
+                      new TaskType(1,'AK')
+                      ];
+    // STYLE
+	$scope.taskTypeList = {
+			"font-size" : "20px",
+		    "text-align" : "center",
+	};
+	
+	// TODO fetch data from WebService
+	$scope.getTaskTypeDetails = function(_taskType)
+	{
+		//MOCK
+		result = {
+				planned: 2,
+				done: 6,
+				time_average: 3.5
+		};
+		return result;
+	}
+	
+	//OK
+	$scope.details = {
+			planned: {
+				icon: 'dashboard',
+				name: 'number of planned tasks:',
+				value: 0
+			},
+			done: {
+				icon: 'dashboard',
+				name: 'number of finished tasks:',
+				value: 0
+			},
+			time_average: {
+				icon: 'dashboard',
+				name: 'average time of task:',
+				value: 0
+			},
+			selectedTaskType: null,
+			update: function(){
+				var data = $scope.getTaskTypeDetails(this.selectedTaskType);
+				this.planned.value = data.planned;
+				this.done.value = data.done;
+				this.time_average.value = data.time_average;
+			}
+	};
+	
+	$scope.updateDetails = function(_taskType){
+		$scope.details.selectedTaskType = _taskType;
+		$scope.details.update();
+	};
+	
+    //OK - at the end of constructor block, the vector is filled
+    $scope.taskTypes = [];
+    
+  //TODO - should fetch from webservice
+    $scope.getAvailableTaskTypes = function(){
+    	return $scope.taskTypesPool;
+    }
+    
+    //TODO send to webserwice
+    $scope.addTaskType = function(_name, _plannedTime){
+    	
+    }
+    
+    //TODO 
+    $scope.reloadData = function(){
+    	
+    }
+    
+    $scope.addTaskTypeDialog = function(ev) {
+        $mdDialog.show({
+          controller: AddTaskTypeDialogController,
+          templateUrl: 'pages/tasks_addTaskTypeDialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          locals: { dataToPass:
+        	  {
+	        	 
+        	  }
+          },
+          clickOutsideToClose:true,
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(tab) {
+        	$scope.addTaskType(tab[0],tab[1]);
+        	$scope.reloadData();
+        }, function() {
+        	$scope.status = 'You cancelled the dialog.';
+        });
+      };
+      
+	  function AddTaskTypeDialogController($scope, $mdDialog, dataToPass) {
+		   $scope.data = dataToPass;
+		    $scope.hide = function() {
+		      $mdDialog.hide();
+		    };
+		    $scope.cancel = function() {
+		      $mdDialog.cancel();
+		    };
+		    $scope.answer = function() {
+		      $mdDialog.hide([$scope.data.taskTypeName,$scope.data.taskTypePlannedTime]);
+		    };
+		  }
+	  
+	  //OK
+	  $scope.taskTypes = $scope.getAvailableTaskTypes();
 });
 
 app.controller('Ctrl', ['$scope', '$mdSidenav','$mdDialog','$location', function($scope, $mdSidenav,$mdDialog,$location){

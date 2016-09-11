@@ -1,14 +1,17 @@
 <!-- home.html -->
 <div class="jumbotron text-center">
-	<h1 style="text-align: center;">Calendar</h1>
-	<div
-		layout="row"
-		layout-align="center center">
-		<i ng-click="prevWeekClick()" class="material-icons" style="cursor: pointer; color: #01579b; font-size: 32px;">keyboard_arrow_left</i>
-		<span class="date">{{dateFrom.day}}&nbsp{{dateFrom.month}}&nbsp{{dateFrom.year}}</span>
-		<span class="date">-</span>
-		<span class="date">{{dateTo.day}}&nbsp{{dateTo.month}}&nbsp{{dateTo.year}}</span>
-		<i ng-click="nextWeekClick()" class="material-icons" style="cursor: pointer; color: #01579b; font-size: 32px;">keyboard_arrow_right</i>
+	<div layout="column" layout-align="center center">
+		<h1 style="text-align: center;">Calendar</h1>
+		<md-button class="md-primary md-raised" ng-click="addTaskDialog()">Add Task</md-button>
+		<div
+			layout="row"
+			layout-align="center center">
+			<i ng-click="prevWeekClick()" class="material-icons" style="cursor: pointer; color: #01579b; font-size: 32px;">keyboard_arrow_left</i>
+			<span class="date">{{dateFrom.day}}&nbsp{{dateFrom.month}}&nbsp{{dateFrom.year}}</span>
+			<span class="date">-</span>
+			<span class="date">{{dateTo.day}}&nbsp{{dateTo.month}}&nbsp{{dateTo.year}}</span>
+			<i ng-click="nextWeekClick()" class="material-icons" style="cursor: pointer; color: #01579b; font-size: 32px;">keyboard_arrow_right</i>
+		</div>
 	</div>
 	<div layout="row" layout-padding layout-align="center">
 		<div layout="column" layout-margin flex="20">
