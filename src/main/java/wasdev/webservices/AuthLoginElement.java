@@ -26,5 +26,15 @@ public class AuthLoginElement implements Serializable {
 	{
 		return password;
 	}
+	
+	public String setUsername()
+	{
+		return username;
+	}
+
+	public String setPassword()
+	{
+		return password;
+	}
 
 }

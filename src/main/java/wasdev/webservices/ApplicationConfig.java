@@ -16,15 +16,15 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() 
     {
         Set<Class<?>> resources = new HashSet<Class<?>>();
- 
+        //
         //register REST modules
         resources.add(AuthResource.class);
- 
+        /////////
         //Manually adding MOXyJSONFeature
-        resources.add(org.glassfish.jersey.moxy.json.MoxyJsonFeature.class);
+//        resources.add(org.glassfish.jersey.moxy.json.MoxyJsonFeature.class);
  
         //Configure Moxy behavior
-        resources.add(JsonMoxyConfigurationContextResolver.class);
+//        resources.add(JsonMoxyConfigurationContextResolver.class);
  
         return resources;
     }
