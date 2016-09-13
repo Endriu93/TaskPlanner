@@ -13,6 +13,7 @@ public class AuthAccessElement implements Serializable {
     private String authId;
     private String authToken;
     private String authPermission;
+    
 
     public AuthAccessElement() {
     }

@@ -17,6 +17,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import ejb.AuthService;
+
 @Provider
 public class AuthSecurityInterceptor implements ContainerRequestFilter {
 

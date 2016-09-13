@@ -3,17 +3,17 @@ package wasdev.webservices;
 import java.util.HashMap;
 import java.util.Map;
  
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
+//import javax.ws.rs.ext.ContextResolver;
+//import javax.ws.rs.ext.Provider;
 
-import org.eclipse.persistence.jaxb.JAXBContextProperties;
-import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
+//import org.eclipse.persistence.jaxb.JAXBContextProperties;
+//import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
  
-@Provider
-public class JsonMoxyConfigurationContextResolver implements ContextResolver<MoxyJsonConfig> 
+//@Provider
+public class JsonMoxyConfigurationContextResolver //implements ContextResolver<MoxyJsonConfig> 
 {
  
-    private final MoxyJsonConfig config;
+   /* private final MoxyJsonConfig config;
  
     public JsonMoxyConfigurationContextResolver() 
     {
@@ -35,5 +35,5 @@ public class JsonMoxyConfigurationContextResolver implements ContextResolver<Mox
     public MoxyJsonConfig getContext(Class<?> objectType) 
     {
         return config;
-    }
+    }*/
 }

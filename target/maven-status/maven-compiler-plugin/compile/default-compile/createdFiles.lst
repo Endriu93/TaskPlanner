@@ -6,6 +6,7 @@ wasdev\webservices\JsonMoxyConfigurationContextResolver.class
 wasdev\webservices\AuthSecurityInterceptor.class
 wasdev\sample\servlet\SimpleServlet.class
 wasdev\webservices\AuthAccessElement.class
+wasdev\webservices\MyJacksonJsonProvider.class
 wasdev\webservices\UserServiceBean.class
 wasdev\webservices\ApplicationConfig.class
 wasdev\webservices\AuthServiceBean.class

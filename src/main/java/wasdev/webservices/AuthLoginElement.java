@@ -27,14 +27,14 @@ public class AuthLoginElement implements Serializable {
 		return password;
 	}
 	
-	public String setUsername()
+	public void setUsername(String username)
 	{
-		return username;
+		this.username = username;
 	}
 
-	public String setPassword()
+	public void setPassword(String password)
 	{
-		return password;
+		this.password = password;
 	}
 
 }
