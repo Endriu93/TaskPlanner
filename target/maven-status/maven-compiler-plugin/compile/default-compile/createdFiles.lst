@@ -1,0 +1,12 @@
+wasdev\sample\servlet\SimpleServlet.class
+wasdev\webservices\AuthResource.class
+wasdev\webservices\UserServiceBean.class
+wasdev\webservices\AuthService.class
+wasdev\webservices\AuthAccessElement.class
+wasdev\webservices\ApplicationConfig.class
+wasdev\webservices\AuthServiceBean.class
+wasdev\webservices\User.class
+wasdev\webservices\AuthLoginElement.class
+wasdev\webservices\AuthSecurityInterceptor.class
+wasdev\webservices\UserService.class
+wasdev\webservices\JsonMoxyConfigurationContextResolver.class

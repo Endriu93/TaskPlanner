@@ -67,7 +67,7 @@ app.config(['$routeProvider',function($routeProvider) {
         // route for the home page
         .when('/', {
             templateUrl : 'pages/home.html',
-            controller  : 'homeController'
+            controller  : 'Ctrl'
         })
 
         // route for the about page
@@ -83,10 +83,9 @@ app.config(['$routeProvider',function($routeProvider) {
         });
 }]);
 
-app.controller('homeController', function($scope) {
-    // create a message to display in our view
-    $scope.message = 'Everyone come and see how good I look!';
-});
+app.config(['$httpProvider',function ($httpProvider) {
+	$httpProvider.interceptors.push('authHttpRequestInterceptor');
+}]);
 
 app.controller('calendarController', function($scope, $mdDialog) {
 	//MOCK
@@ -533,15 +532,51 @@ app.controller('tasksController', function($scope,$mdDialog) {
 	  $scope.taskTypes = $scope.getAvailableTaskTypes();
 });
 
-app.controller('Ctrl', ['$scope', '$mdSidenav','$mdDialog','$location', function($scope, $mdSidenav,$mdDialog,$location){
+app.controller('Ctrl', ['$scope', '$mdSidenav','$mdDialog','$location','authFactory', function($scope, $mdSidenav,$mdDialog,$location,authFactory){
 	  $scope.toggleSidenav = function(menuId) {
 	    $mdSidenav(menuId).toggle();
-	  }
+	  };
+
+	 /* $scope.setLogged = function(logged)
+	  {
+		  $scope.isLogged = logged;
+	  }*/
+//	  $scope.isLogged = false;
 	  
-	  $scope.go = function ( path ) {
+	  $scope.go = function ( path, _isLogged ) {
+		  if(_isLogged == true)
 		  $location.path( path );
 		};
-	  
+		
+		
+	$scope.loginDialog = function(ev) {
+        $mdDialog.show({
+          controller: "LoginDialogController",
+          templateUrl: 'pages/loginDialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+         /* locals: { dataToPass:
+        	  {
+	        	 
+        	  }
+          },*/
+          clickOutsideToClose:true,
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(tab) {
+//        	$scope.isLogged = true;
+        	$scope.menu[0].disabled = false;
+        	$scope.menu[1].disabled = false;
+        	var user = {
+        		username: tab[0],
+        		password: tab[1]
+        	};
+        	$scope.login(user);
+        }, function() {
+        	$scope.status = 'You cancelled the dialog.';
+        });
+      };
+	   
 	  $scope.showAlert = function(_title,_content,_ok) {
 		    $mdDialog.show(
 		      $mdDialog.alert()
@@ -558,13 +593,17 @@ app.controller('Ctrl', ['$scope', '$mdSidenav','$mdDialog','$location', function
 	                   link : '',
 	                   title: 'Typy zadań',
 	                   icon: 'dashboard',
-	                   route: '/tasks'
+	                   route: '/tasks',
+	                   disabled: true
+	                   
 	                 },
 	                 {
 	                   link : '',
 	                   title: 'Calendar',
 	                   icon: 'group',
-	                   route: '/calendar'
+	                   route: '/calendar',
+	                   disabled: true
+	                   
 	                 }
 	               ];
 	  
@@ -572,10 +611,90 @@ app.controller('Ctrl', ['$scope', '$mdSidenav','$mdDialog','$location', function
 	                  {
 	                    link : '',
 	                    title: 'Wyloguj',
-	                    icon: 'info'
+	                    icon: 'info',
+	                    disabled: true
 	                  }
 	                ];
 	  
+	  $scope.login = function (user) {
+	        authFactory.login(user).success(function (data) {
+	            authFactory.setAuthData(data);
+	            // Redirect etc.
+	        }).error(function () {
+	            $scope.showAlert('error','error while authentication','ok');
+	        });
+	    };
+	  
+	  
 	  }]);
+
+/////////////////////////////////////////////////////////////////
+//LOGIN
+/////////////////////////////////////////////////////////////////
+
+app.factory('authFactory', ['$rootScope', function ($rootScope, $http) {
+
+	var $http = angular.injector(['ng']).get('$http');
+	
+    var authFactory = {
+        authData: undefined
+    };
+    
+    authFactory.login = function (user) {
+        return $http.post('/rest/auth/login', user);
+    };
+
+    authFactory.setAuthData = function (authData) {
+        this.authData = {
+            authId: authData.authId,
+            authToken: authData.authToken,
+            authPermission: authData.authPermission
+        };
+        $rootScope.$broadcast('authChanged');
+    };
+
+    authFactory.getAuthData = function () {
+        return this.authData;
+    };
+
+    authFactory.isAuthenticated = function () {
+        return !angular.isUndefined(this.getAuthData());
+    };
+
+return authFactory;
+}]);
+
+app.factory('authHttpRequestInterceptor', ['$rootScope', '$injector', 'authFactory', function ($rootScope, $injector, authFactory) {
+    var authHttpRequestInterceptor = {
+        request: function ($request) {
+            var authFactory = $injector.get('authFactory');
+            if (authFactory.isAuthenticated()) {
+                $request.headers['auth-id'] = authFactory.getAuthData().authId;
+                $request.headers['auth-token'] = authFactory.getAuthData().authToken;
+            }
+            return $request;
+        }};
+
+    return authHttpRequestInterceptor;
+}]);
+
+
+
+app.controller('LoginDialogController', ['$scope', '$mdDialog','authFactory', function ($scope,  $mdDialog, authFactory) {
+    
+    var dataToPass = {};
+    $scope.data = dataToPass;
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+    $scope.answer = function() {
+      $mdDialog.hide([$scope.data.username,$scope.data.password]);
+    };
+}]);
+
+
 
 		

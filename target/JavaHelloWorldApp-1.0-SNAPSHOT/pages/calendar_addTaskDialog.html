@@ -1,0 +1,37 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Plan task to do</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="images/ic_clear_white_24px.svg"  aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content" layout="column" layout-padding >
+       	<md-input-container class="md-block" flex-gt-sm>
+            <label>task type</label>
+            <md-select ng-model="data.selectedTaskType">
+              <md-option ng-repeat="taskType in data.availableTaskTypes" ng-value="{{taskType}}">
+                {{taskType.name}}
+              </md-option>
+            </md-select>
+         </md-input-container>
+	     <md-datepicker ng-model="data.selectedDate" md-placeholder="Enter date"
+	 				md-min-date="data.minDate"></md-datepicker>
+	 	<h3>NOTE: Task planner does not work for weekend</h3>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="answer()">
+       Accept
+      </md-button>
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

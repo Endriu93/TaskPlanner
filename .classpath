@@ -24,5 +24,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/logic.js"/>
+	<classpathentry kind="lib" path="src/main/java/wasdev/sample/servlet/SimpleServlet.java"/>
+	<classpathentry kind="lib" path="src/main/java/wasdev/webservices/AuthAccessElement.java"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,6 +1,9 @@
 <!-- home.html -->
-    <div class="jumbotron text-center">
-        <h1>Home Page</h1>
-
-        <p>{{ message }}</p>
-    </div>
+<div class="jumbotron text-center">
+	<div layout="column" layout-align="center center">
+		<h1 style="text-align: center;">Home</h1>
+		<md-button class="md-primary md-raised" ng-click="loginDialog($event)">Log in</md-button>
+		<md-button class="md-primary md-raised" ng-click="loginDialog()">create Account</md-button>
+	</div>
+	
+</div>

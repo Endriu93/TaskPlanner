@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html
+	ng-app='Main'
+	ng-controller='Ctrl as Ctrl'>
+<head>
+<title>Task Planner</title>
+<meta charset="utf-8" />
+<!-- angular libraries-->
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+	
+<!-- Angular Material Library -->
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<link
+	rel="stylesheet"
+	href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	
+<!-- Own scripts-->
+<script
+	type="text/javascript"
+	src="logic.js"></script>
+<link
+	rel="stylesheet"
+	type="text/css"
+	href="style.css">
+</head>
+<body layout="column">
+	<md-toolbar layout="row">
+      <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <h1 class="md-toolbar-tools" layout-align-gt-sm="center">TaskPlanner</h1>
+    </md-toolbar>
+    <div layout="row" flex>
+       <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+		  <md-toolbar class="md-tall md-hue-2">
+		    <span flex></span>
+		    <div layout="column" class="md-toolbar-tools-bottom inset">
+		      <user-avatar></user-avatar>
+		      <span></span>
+		      <div>Firstname Lastname</div>
+		      <div>email@domainname.com</div>
+		    </div>
+		  </md-toolbar>
+		  <md-list>
+		    <md-item ng-repeat="item in menu" style="cursor: pointer;">
+			    <div ng-click="go(item.route.toString(),!item.disabled)" > 
+			      <!-- <a ngHref='item.route'> -->
+			        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+			          <div class="inset">
+						<i class="material-icons">{{item.icon}}</i>			         
+					  </div>
+			          <div class="inset">{{item.title}}
+			          </div>
+			        </md-item-content>
+			      <!-- </a> -->
+		      	</div> 
+		    </md-item>
+		    <md-divider></md-divider>
+		    <md-subheader>Management</md-subheader>
+		    <md-item ng-repeat="item in admin">
+		      <a>
+		        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+		          <div class="inset">
+					<i class="material-icons">{{item.icon}}</i>			         
+		          </div>
+		          <div class="inset">{{item.title}}
+		          </div>
+		        </md-item-content>
+		      </a>
+		    </md-item>
+		  </md-list>
+		</md-sidenav>
+        <div layout="column" flex id="content">
+            <md-content layout="column" flex class="md-padding">
+				
+		        <div ng-view></div>
+		       
+            </md-content>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!-- home.html -->
+<div class="jumbotron text-center">
+	<div layout="column" layout-align="center center">
+		<h1 style="text-align: center;">Tasks</h1>
+		<md-button class="md-primary md-raised" ng-click="addTaskTypeDialog()">Add Task Type</md-button>
+		
+	</div>
+	<div layout="row">
+		<div layout="column" layout-margin flex="50">
+			<span ng-style="taskTypeList" >Types of tasks</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				ng-repeat="taskType in taskTypes"
+				ng-click="updateDetails(taskType)"
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div ng-style="taskType.styleName">
+				{{taskType.name}}
+				</div >
+			</md-whiteframe>
+		</div>
+		<md-divider vertical style="padding-left: 0px; padding-right:0px;"></md-divider>
+		<div layout="column" layout-margin flex="50">
+			<span ng-style="taskTypeList" >Details of Task type: </span>
+			<span>{{details.selectedTaskType.name}}</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div md-ink-ripple layout="row" layout-align="start center">
+			          <div class="inset">
+						<i class="material-icons">{{details.planned.icon}}</i>			         
+					  </div>
+			          <div class="inset">{{details.planned.name}}
+			          </div>
+			           <div class="inset">{{details.planned.value}}
+			          </div>
+			    </div>
+			    <div md-ink-ripple layout="row" layout-align="start center">
+			          <div class="inset">
+						<i class="material-icons">{{details.done.icon}}</i>			         
+					  </div>
+			          <div class="inset">{{details.done.name}}
+			          </div>
+			           <div class="inset">{{details.done.value}}
+			          </div>
+			    </div>
+			    <div md-ink-ripple layout="row" layout-align="start center">
+			          <div class="inset">
+						<i class="material-icons">{{details.time_average.icon}}</i>			         
+					  </div>
+			          <div class="inset">{{details.time_average.name}}
+			          </div>
+			           <div class="inset">{{details.time_average.value}}
+			          </div>
+			    </div>
+			</md-whiteframe>
+		</div>
+	</div>
+</div>

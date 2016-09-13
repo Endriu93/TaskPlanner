@@ -1,0 +1,118 @@
+<!-- home.html -->
+<div class="jumbotron text-center">
+	<div layout="column" layout-align="center center">
+		<h1 style="text-align: center;">Calendar</h1>
+		<md-button class="md-primary md-raised" ng-click="addTaskDialog()">Add Task</md-button>
+		<div
+			layout="row"
+			layout-align="center center">
+			<i ng-click="prevWeekClick()" class="material-icons" style="cursor: pointer; color: #01579b; font-size: 32px;">keyboard_arrow_left</i>
+			<span class="date">{{dateFrom.day}}&nbsp{{dateFrom.month}}&nbsp{{dateFrom.year}}</span>
+			<span class="date">-</span>
+			<span class="date">{{dateTo.day}}&nbsp{{dateTo.month}}&nbsp{{dateTo.year}}</span>
+			<i ng-click="nextWeekClick()" class="material-icons" style="cursor: pointer; color: #01579b; font-size: 32px;">keyboard_arrow_right</i>
+		</div>
+	</div>
+	<div layout="row" layout-padding layout-align="center">
+		<div layout="column" layout-margin flex="20">
+			<span ng-style="dayname" >Monday</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				ng-repeat="task in mondayTasks"
+				ng-click="taskDialog($event,task.id,task.name,task.isDone,task.hours)"
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div ng-style="task.styleName">
+				{{task.name}}
+				</div >
+				<div layout="row" layout-align="center center" style="width: 100%;">
+					<div ng-style="task.styleHours" flex="grow" style="text-align: center;">
+						{{task.hours}}
+						<span>h</span>
+					</div>
+					<i class="material-icons" ng-style="task.styleIcon">done</i>
+				</div>
+			</md-whiteframe>
+		</div>
+		<md-divider vertical style="padding-left: 0px; padding-right:0px;"></md-divider>
+		<div layout="column" layout-margin flex="20">
+			<span ng-style="dayname" >Tuesday</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				ng-repeat="task in tuesdayTasks"
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div ng-style="task.styleName">
+				{{task.name}}
+				</div >
+				<div layout="row" layout-align="center center" style="width: 100%;">
+					<div ng-style="task.styleHours" flex="grow" style="text-align: center;">
+						{{task.hours}}
+						<span>h</span>
+					</div>
+					<i class="material-icons" ng-style="task.styleIcon">done</i>
+				</div>
+			</md-whiteframe>
+		</div>
+		<md-divider vertical style="padding-left: 0px; padding-right:0px;"></md-divider>
+		<div layout="column" layout-margin flex="20">
+			<span ng-style="dayname" >Wednesday</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				ng-repeat="task in wednesdayTasks"
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div ng-style="task.styleName">
+				{{task.name}}
+				</div >
+				<div layout="row" layout-align="center center" style="width: 100%;">
+					<div ng-style="task.styleHours" flex="grow" style="text-align: center;">
+						{{task.hours}}
+						<span>h</span>
+					</div>
+					<i class="material-icons" ng-style="task.styleIcon">done</i>
+				</div>
+			</md-whiteframe>
+		</div>
+		<md-divider vertical style="padding-left: 0px; padding-right:0px;"></md-divider>
+		<div layout="column" layout-margin flex="20">
+			<span ng-style="dayname" >Thursday</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				ng-repeat="task in thursdayTasks"
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div ng-style="task.styleName">
+				{{task.name}}
+				</div >
+				<div layout="row" layout-align="center center" style="width: 100%;">
+					<div ng-style="task.styleHours" flex="grow" style="text-align: center;">
+						{{task.hours}}
+						<span>h</span>
+					</div>
+					<i class="material-icons" ng-style="task.styleIcon">done</i>
+				</div>
+			</md-whiteframe>
+		</div>
+		<md-divider vertical style="padding-left: 0px; padding-right:0px;"></md-divider>
+		<div layout="column" layout-margin flex="20">
+			<span ng-style="dayname" >Friday</span>
+			<md-whiteframe layout="column" layout-align="start center"  
+				ng-repeat="task in fridayTasks"
+				class="md-whiteframe-1dp"
+				style="cursor: pointer;"
+				>
+				<div ng-style="task.styleName">
+				{{task.name}}
+				</div >
+				<div layout="row" layout-align="center center" style="width: 100%;">
+					<div ng-style="task.styleHours" flex="grow" style="text-align: center;">
+						{{task.hours}}
+						<span>h</span>
+					</div>
+					<i class="material-icons" ng-style="task.styleIcon">done</i>
+				</div>
+			</md-whiteframe>
+		</div>
+	</div>
+</div>
